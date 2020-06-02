@@ -1,9 +1,6 @@
 import React from "react";
+import { RewardCard } from "../components/RewardCard";
 
 export const MyRewards: React.FC<{}> = (props) => {
-  return (
-    <div>
-      <p>My rewards page</p>
-    </div>
-  );
+  return <RewardCard cardName="Chase Sapphire" reward="3% back at Walmart" />;
 };
