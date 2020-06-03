@@ -3,7 +3,15 @@
 }
 
 .card {
-  width: 45%;
+  /*width: 45%;*/
+  width: 15%;
   margin: auto;
   text-align: center;
+  margin-top: 1%;
+}
+
+.list-column-content {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 3%;
 }
