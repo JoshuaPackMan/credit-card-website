@@ -12,7 +12,14 @@ export const Navbar: React.FC<{}> = (props) => {
         <Link to={"/"} className="navbar-item">
           My Rewards
         </Link>
+        <Link to={"/explore"} className="navbar-item">
+          Explore
+        </Link>
+        <Link to={"/about"} className="navbar-item">
+          About
+        </Link>
 
+        {/*   this is the expand menu btn that appears when the user resizes their window to a smaller width
         <a
           role="button"
           className="navbar-burger burger"
@@ -24,15 +31,21 @@ export const Navbar: React.FC<{}> = (props) => {
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
+        */}
       </div>
 
+      {/*
       <div className="navbar-menu">
         <div className="navbar-start">
+          <Link to={"/explore"} className="navbar-item">
+            Explore
+          </Link>
           <Link to={"/about"} className="navbar-item">
             About
           </Link>
         </div>
       </div>
+        */}
     </nav>
   );
 };

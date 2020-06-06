@@ -6,7 +6,7 @@ interface RewardsListProps {
 
 export const RewardsList: React.FC<RewardsListProps> = (RewardsListProps) => {
   return (
-    <div className="content">
+    <div className="content rewards-list">
       <h3 style={{ marginTop: "1.5%" }}>Rewards:</h3>
       <ul>
         {RewardsListProps.rewards.map((reward, i) => (
