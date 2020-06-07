@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { SearchResults } from "../model/searchResults";
 import { APIsearchResults } from "../model/APIsearchResults";
 
-const APIkey = "fbbee4a09e0811eab6d0812c92797c5f";
+const APIkey = process.env.REACT_APP_CCStack_KEY;
 const ccStackAPIURL = `https://api.ccstack.io/v1/search/cards?api_key=${APIkey}&query=`;
 
 const mapAPIResultsToModel = (
