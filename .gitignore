@@ -1,3 +1,5 @@
 dev-notes.md
 to-do.md
-server/
+server/account.json
+server/private.json
+server/user.json
