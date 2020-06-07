@@ -12,8 +12,8 @@ export const Navbar: React.FC<{}> = (props) => {
         <Link to={"/"} className="navbar-item">
           My Rewards
         </Link>
-        <Link to={"/explore"} className="navbar-item">
-          Explore
+        <Link to={"/search"} className="navbar-item">
+          Search
         </Link>
         <Link to={"/about"} className="navbar-item">
           About

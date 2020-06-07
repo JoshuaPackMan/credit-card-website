@@ -4,7 +4,7 @@ import "./App.sass";
 import { Navbar } from "./components/Navbar";
 import { About } from "./pages/About";
 import { MyRewards } from "./pages/MyRewards";
-import { Explore } from "./pages/Explore";
+import { Search } from "./pages/Search";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={MyRewards} />
         <Route path="/about" component={About} />
-        <Route path="/explore" component={Explore} />
+        <Route path="/search" component={Search} />
       </Switch>
     </BrowserRouter>
   );
