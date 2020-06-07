@@ -1,0 +1,7 @@
+node_modules/
+.idea/*
+.env
+account.json
+private.json
+user.json
+.DS_Store

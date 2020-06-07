@@ -1,0 +1,11 @@
+{
+  "authors": {
+    "Tolkien": {
+      "books": [
+        "The Lord of the Rings",
+        "The Hobbit",
+        "The Silmarillion"
+      ]
+    }
+  }
+}
