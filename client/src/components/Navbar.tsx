@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { LoginLogoutBtn } from "./LoginLogoutBtn";
+import { useHistory } from "react-router-dom";
 
 export const Navbar: React.FC<{}> = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
+  const handleLoginSignup = () => {
+    history.push("/loginSignup");
+  };
+  const handleSignout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("un");
+    history.push("/search");
+  };
+  useEffect(() => {
+    console.log("in Navbar useEffect");
+    let loggedIn = false;
+    if (localStorage.getItem("jwt") != null) {
+      loggedIn = true;
+    }
+
+    setIsLoggedIn(loggedIn);
+  }, []);
   return (
     <nav
       className="navbar is-dark"
@@ -18,47 +39,20 @@ export const Navbar: React.FC<{}> = (props) => {
         <Link to={"/about"} className="navbar-item">
           About
         </Link>
-
-        {/*   this is the expand menu btn that appears when the user resizes their window to a smaller width
-        <a
-          role="button"
-          className="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-        */}
       </div>
 
-      {/*
-      <div className="navbar-menu">
-        <div className="navbar-start">
-          <Link to={"/explore"} className="navbar-item">
-            Explore
-          </Link>
-          <Link to={"/about"} className="navbar-item">
-            About
-          </Link>
+      <div className="navbar-end">
+        <div className="navbar-item">
+          {isLoggedIn ? (
+            <LoginLogoutBtn handleClick={handleSignout} text="Signout" />
+          ) : (
+            <LoginLogoutBtn
+              handleClick={handleLoginSignup}
+              text="Login/Signup"
+            />
+          )}
         </div>
       </div>
-        */}
     </nav>
   );
 };
-
-/*
-<nav>
-    <ul>
-        <li>
-            <Link to={"/"}>My Rewards</Link>
-        </li>
-        <li>
-            <Link to={"/about"}>About</Link>
-        </li>
-    </ul>
-</nav>
-*/

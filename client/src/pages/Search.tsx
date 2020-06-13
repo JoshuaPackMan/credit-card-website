@@ -18,16 +18,6 @@ export const Search: React.FC<{}> = (props) => {
   const inputStyle = {
     width: "80%",
   };
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/public/authors/Tolkien/books")
-      .then(function (response) {
-        setCards(response.data.result);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
   const updateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -44,11 +34,6 @@ export const Search: React.FC<{}> = (props) => {
 
   return (
     <div style={topLevelDivStyle}>
-      {cards.map((card, i) => (
-        <p key={i} className="list-item">
-          {card}
-        </p>
-      ))}
       <h4 className="title is-4">Search:</h4>
       <input
         className="input"
