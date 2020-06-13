@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 
-export const LoginSignup: React.FC<{}> = (props) => {
+interface LoginSignupProps {
+  setIsLoggedIn: (x: boolean) => void;
+}
+
+export const LoginSignup: React.FC<LoginSignupProps> = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginFailedText, setLoginFailedText] = useState("");
+  const [signUpFailedText, setSignUpFailedText] = useState("");
   const history = useHistory();
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,15 +19,16 @@ export const LoginSignup: React.FC<{}> = (props) => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const login = async () => {
+  const login = async (name: String, pass: String) => {
     await Axios.post("http://localhost:3000/account/login", {
-      name: username,
-      pass: password,
+      name: name,
+      pass: pass,
     })
       .then((res) => {
         localStorage.setItem("jwt", res.data.jwt);
-        localStorage.setItem("un", username);
+        localStorage.setItem("un", res.data.name);
 
+        props.setIsLoggedIn(true);
         history.push("/search");
       })
       .catch((err) => {
@@ -33,20 +39,27 @@ export const LoginSignup: React.FC<{}> = (props) => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    await Axios({
-      method: "POST",
-      url: "http://localhost:3000/account/create",
-      data: {
-        name: username,
-        pass: password,
-      },
-    });
+    try {
+      await Axios({
+        method: "POST",
+        url: "http://localhost:3000/account/create",
+        data: {
+          name: username,
+          pass: password,
+        },
+      });
+    } catch (error) {
+      if (error.response.status == 401) {
+        setSignUpFailedText("This account already exists. Please login.");
+        return;
+      }
+    }
 
-    login();
+    login(username, password);
   };
   const handleLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login();
+    login(username, password);
   };
 
   return (
@@ -126,6 +139,9 @@ export const LoginSignup: React.FC<{}> = (props) => {
 
               <div className="field">
                 <div className="control">
+                  <h5 className="subtitle is-5" style={{ color: "red" }}>
+                    {signUpFailedText}
+                  </h5>
                   <button
                     className="button is-success"
                     id="SignUp"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./App.sass";
 import { Navbar } from "./components/Navbar";
@@ -8,18 +8,39 @@ import { MyRewards } from "./pages/MyRewards";
 import { Search } from "./pages/Search";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-function App() {
+const App: React.FC<{}> = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Switch>
         <Route exact path="/" component={MyRewards} />
         <Route path="/about" component={About} />
         <Route path="/search" component={Search} />
-        <Route path="/loginSignup" component={LoginSignup} />
+        <Route
+          path="/loginSignup"
+          render={(props) => (
+            <LoginSignup {...props} setIsLoggedIn={setIsLoggedIn} />
+          )}
+        />
       </Switch>
     </BrowserRouter>
   );
-}
+};
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Navbar />
+//       <Switch>
+//         <Route exact path="/" component={MyRewards} />
+//         <Route path="/about" component={About} />
+//         <Route path="/search" component={Search} />
+//         <Route path="/loginSignup" component={LoginSignup} />
+//       </Switch>
+//     </BrowserRouter>
+//   );
+// }
 
 export default App;

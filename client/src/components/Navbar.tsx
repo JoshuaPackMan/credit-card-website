@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { LoginLogoutBtn } from "./LoginLogoutBtn";
 import { useHistory } from "react-router-dom";
 
-export const Navbar: React.FC<{}> = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface NavbarProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (x: boolean) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = (props) => {
   const history = useHistory();
   const handleLoginSignup = () => {
     history.push("/loginSignup");
@@ -12,16 +16,16 @@ export const Navbar: React.FC<{}> = (props) => {
   const handleSignout = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("un");
+    props.setIsLoggedIn(false);
     history.push("/search");
   };
   useEffect(() => {
-    console.log("in Navbar useEffect");
     let loggedIn = false;
     if (localStorage.getItem("jwt") != null) {
       loggedIn = true;
     }
 
-    setIsLoggedIn(loggedIn);
+    props.setIsLoggedIn(loggedIn);
   }, []);
   return (
     <nav
@@ -43,12 +47,12 @@ export const Navbar: React.FC<{}> = (props) => {
 
       <div className="navbar-end">
         <div className="navbar-item">
-          {isLoggedIn ? (
+          {props.isLoggedIn ? (
             <LoginLogoutBtn handleClick={handleSignout} text="Signout" />
           ) : (
             <LoginLogoutBtn
               handleClick={handleLoginSignup}
-              text="Login/Signup"
+              text="Login/Sign up"
             />
           )}
         </div>
