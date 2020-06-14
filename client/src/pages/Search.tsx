@@ -15,6 +15,15 @@ export const Search: React.FC<{}> = (props) => {
     margin: "0 auto",
     marginTop: "1%",
   };
+  const buttonWrapper = {
+    display: "flex",
+    justifyContent: "center",
+  };
+  const addToMyCardsBtn = {
+    margin: "0 auto",
+    marginTop: "1%",
+    marginBottom: "1%",
+  };
   const inputStyle = {
     width: "80%",
   };
@@ -51,15 +60,26 @@ export const Search: React.FC<{}> = (props) => {
         </span>
       </button>
       {results.map((reward, i) => (
-        <div key={i} className="list-item">
-          <h5 className="title is-5">{reward["cardName"]}</h5>
-          <ul>
-            {reward.rewards.map((r, m) => (
-              <li key={m} className="list-item">
-                {r}
-              </li>
-            ))}
-          </ul>
+        <div style={{ width: "100%" }}>
+          <div className="card" style={{ width: "100%" }}>
+            <div key={i} className="list-item">
+              <h5 className="title is-5">{reward["cardName"]}</h5>
+              <ul>
+                {reward.rewards.map((r, m) => (
+                  <li
+                    key={m}
+                    className="list-item"
+                    style={{ textAlign: "left" }}
+                  >
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button className="button is-primary" style={addToMyCardsBtn}>
+              Add this to My Cards
+            </button>
+          </div>
         </div>
       ))}
     </div>
