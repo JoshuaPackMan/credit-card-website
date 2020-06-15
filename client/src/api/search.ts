@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse } from "axios";
+import Axios from "axios";
 import { SearchResults } from "../model/searchResults";
 import { APIsearchResults } from "../model/APIsearchResults";
 

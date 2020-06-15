@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchResults } from "../model/searchResults";
-import { APIsearchResults } from "../model/APIsearchResults";
-import { searchAPI } from "../api/search";
+//import { searchAPI } from "../api/search"; //CCStack
+import { searchAPI } from "../api/searchDB";
+import { SearchCard } from "../components/SearchCard";
 
 export const Search: React.FC<{}> = (props) => {
   const [searchText, setSearchText] = useState("");
-  const [cards, setCards] = useState([""]);
   const [results, setResults] = useState<SearchResults[]>([]);
   const topLevelDivStyle = {
     width: "70%",
@@ -19,13 +18,11 @@ export const Search: React.FC<{}> = (props) => {
     display: "flex",
     justifyContent: "center",
   };
-  const addToMyCardsBtn = {
-    margin: "0 auto",
-    marginTop: "1%",
-    marginBottom: "1%",
-  };
   const inputStyle = {
     width: "80%",
+  };
+  const addToMyCards = (cardName: string) => {
+    console.log(cardName);
   };
   const updateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -59,28 +56,13 @@ export const Search: React.FC<{}> = (props) => {
           </i>
         </span>
       </button>
-      {results.map((reward, i) => (
-        <div style={{ width: "100%" }}>
-          <div className="card" style={{ width: "100%" }}>
-            <div key={i} className="list-item">
-              <h5 className="title is-5">{reward["cardName"]}</h5>
-              <ul>
-                {reward.rewards.map((r, m) => (
-                  <li
-                    key={m}
-                    className="list-item"
-                    style={{ textAlign: "left" }}
-                  >
-                    {r}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <button className="button is-primary" style={addToMyCardsBtn}>
-              Add this to My Cards
-            </button>
-          </div>
-        </div>
+      {results.map((SearchResult, i) => (
+        <SearchCard
+          onAddToMyCardsClick={addToMyCards}
+          cardName={SearchResult.cardName}
+          key={i}
+          rewards={SearchResult.rewards}
+        />
       ))}
     </div>
   );
