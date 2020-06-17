@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 interface SearchCardProps {
   onAddToMyCardsClick: (cardName: string) => void;
@@ -7,7 +9,9 @@ interface SearchCardProps {
 }
 
 export const SearchCard: React.FC<SearchCardProps> = (props) => {
+  const [btnClicked, setbtnClicked] = useState(false);
   const handleAddToMyCardsBtnClick = () => {
+    setbtnClicked(true);
     props.onAddToMyCardsClick(props.cardName);
   };
   const addToMyCardsBtn = {
@@ -29,13 +33,21 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
             ))}
           </ul>
         </div>
-        <button
-          onClick={handleAddToMyCardsBtnClick}
-          className="button is-primary"
-          style={addToMyCardsBtn}
-        >
-          Add this to My Cards
-        </button>
+        {btnClicked ? (
+          <span className="icon is-small is-right">
+            <i className="fas fa-home">
+              <FontAwesomeIcon icon={faCheck} />
+            </i>
+          </span>
+        ) : (
+          <button
+            onClick={handleAddToMyCardsBtnClick}
+            className="button is-primary"
+            style={addToMyCardsBtn}
+          >
+            Add this to My Cards
+          </button>
+        )}
       </div>
     </div>
   );

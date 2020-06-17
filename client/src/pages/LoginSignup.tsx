@@ -49,13 +49,28 @@ export const LoginSignup: React.FC<LoginSignupProps> = (props) => {
         },
       });
     } catch (error) {
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         setSignUpFailedText("This account already exists. Please login.");
         return;
       }
     }
 
-    login(username, password);
+    await login(username, password);
+
+    // create user cards array in DB
+    //let userName = localStorage.getItem("un");
+    let jwt = localStorage.getItem("jwt");
+    await Axios({
+      method: "POST",
+      //url: `http://localhost:3000/user/${userName}/cards`,
+      url: `http://localhost:3000/user/cards`,
+      data: {
+        data: {
+          userCards: [],
+        },
+      },
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
   };
   const handleLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

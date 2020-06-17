@@ -8,11 +8,11 @@ export const UserCardsList: React.FC<UserCardsListProps> = (
   UserCardsListProps
 ) => {
   return (
-    <div className="list list-column-content is-hoverable">
+    <div className="list-column-content box list">
       {UserCardsListProps.userCards.map((card, i) => (
-        <a key={i} className="list-item">
-          {card}
-        </a>
+        <div key={i} className="list-item">
+          <button className="myCardsBtn">{card}</button>
+        </div>
       ))}
     </div>
   );

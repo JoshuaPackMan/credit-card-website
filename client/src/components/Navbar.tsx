@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LoginLogoutBtn } from "./LoginLogoutBtn";
 import { useHistory } from "react-router-dom";
@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
     }
 
     props.setIsLoggedIn(loggedIn);
-  }, []);
+  }, [props]);
   return (
     <nav
       className="navbar is-dark"

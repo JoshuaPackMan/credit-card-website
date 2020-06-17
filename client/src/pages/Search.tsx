@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchResults } from "../model/searchResults";
-//import { searchAPI } from "../api/search"; //CCStack
-import { searchAPI } from "../api/searchDB";
+import { addToMyCards } from "../api/addToMyCards";
+import { searchAPI } from "../api/search"; //CCStack
+//import { searchAPI } from "../api/searchDB";
 import { SearchCard } from "../components/SearchCard";
 
 export const Search: React.FC<{}> = (props) => {
@@ -14,15 +15,11 @@ export const Search: React.FC<{}> = (props) => {
     margin: "0 auto",
     marginTop: "1%",
   };
-  const buttonWrapper = {
-    display: "flex",
-    justifyContent: "center",
-  };
   const inputStyle = {
     width: "80%",
   };
-  const addToMyCards = (cardName: string) => {
-    console.log(cardName);
+  const addToMyCardsBtnHandler = (cardName: string) => {
+    addToMyCards(cardName);
   };
   const updateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -58,7 +55,7 @@ export const Search: React.FC<{}> = (props) => {
       </button>
       {results.map((SearchResult, i) => (
         <SearchCard
-          onAddToMyCardsClick={addToMyCards}
+          onAddToMyCardsClick={addToMyCardsBtnHandler}
           cardName={SearchResult.cardName}
           key={i}
           rewards={SearchResult.rewards}

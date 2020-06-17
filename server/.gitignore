@@ -5,3 +5,4 @@ account.json
 private.json
 user.json
 .DS_Store
+data/fromDBpublic.json

@@ -1,25 +1,21 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { RewardCard } from "../components/RewardCard";
+import Axios from "axios";
+import { getMyCards } from "../api/GETmyCards";
 import { UserCardsList } from "../components/UserCardsList";
 import { RewardsList } from "../components/RewardsList";
 
-export const MyRewards: React.FC<{}> = (props) => {
+export const MyRewards: React.FC<{}> = () => {
   const [userCards, setUserCards] = useState([""]);
   const [rewards, setRewards] = useState([""]);
 
-  useEffect(() => {
-    const sampleRewards = [
-      "2% cash back at Walmart",
-      "3x bonus points at Walmart",
-    ];
+  const getAndSetUserCardsFromBackend = async () => {
+    const cards = await getMyCards();
+    //console.log(cards);
+    setUserCards(cards);
+  };
 
-    const sampleUserCards = [
-      "Chase Sapphire Reserve",
-      "Bank of America",
-      "Visa",
-    ];
-    setUserCards(sampleUserCards);
-    setRewards(sampleRewards);
+  useEffect(() => {
+    getAndSetUserCardsFromBackend();
   }, []);
 
   return (
@@ -35,8 +31,6 @@ export const MyRewards: React.FC<{}> = (props) => {
           <RewardsList rewards={rewards} />
         </div>
       </div>
-      {/*<RewardCard cardName="Chase Sapphire" reward="3% back at Walmart" />
-      <RewardCard cardName="Bank of America" reward="2% back at Costco" />*/}
     </Fragment>
   );
 };

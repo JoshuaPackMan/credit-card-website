@@ -1,15 +1,1 @@
-{
-  "cards": {
-    "Chase Sapphire": {
-      "cardName": "Chase Sapphire",
-      "rewards": ["2x bonus points at Costco", "3% back at Walmart"]
-    },
-    "Bank of America": {
-      "cardName": "Bank of America",
-      "rewards": [
-        "3x bonus points at Outback Steakhouse",
-        "1.5% back at Whole Foods"
-      ]
-    }
-  }
-}
+{}

@@ -1,6 +1,6 @@
 import Axios from "axios";
-import { SearchResults } from "../model/searchResults";
 import { backendAPIsearchResults } from "../model/backendAPIsearchResults";
+import { SearchResults } from "../model/searchResults";
 
 const backendURL = `http://localhost:3000/public/cards/`;
 
