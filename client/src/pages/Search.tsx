@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchResults } from "../model/searchResults";
@@ -7,8 +7,8 @@ import { searchAPI } from "../api/search"; //CCStack
 //import { searchAPI } from "../api/searchDB";
 import { SearchCard } from "../components/SearchCard";
 
-export const Search: React.FC<{}> = (props) => {
-  const [searchText, setSearchText] = useState("");
+export const Search: React.FC<{}> = () => {
+  const searchText = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<SearchResults[]>([]);
   const topLevelDivStyle = {
     width: "70%",
@@ -21,18 +21,16 @@ export const Search: React.FC<{}> = (props) => {
   const addToMyCardsBtnHandler = (cardName: string) => {
     addToMyCards(cardName);
   };
-  const updateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
   const handleKeyDown = (e: any): any => {
     if (e.key === "Enter") {
-      setSearchText(e.target.value);
       callCCStackAPIWithSearch();
     }
   };
   const callCCStackAPIWithSearch = async () => {
-    let results = await searchAPI(searchText);
-    setResults(results);
+    if (searchText && searchText.current) {
+      let results = await searchAPI(searchText.current.value);
+      setResults(results);
+    }
   };
 
   return (
@@ -43,7 +41,7 @@ export const Search: React.FC<{}> = (props) => {
         style={inputStyle}
         type="text"
         placeholder="Chase Sapphire"
-        onChange={updateSearch}
+        ref={searchText}
         onKeyDown={handleKeyDown}
       ></input>
       <button className="button" onClick={callCCStackAPIWithSearch}>
@@ -59,6 +57,7 @@ export const Search: React.FC<{}> = (props) => {
           cardName={SearchResult.cardName}
           key={i}
           rewards={SearchResult.rewards}
+          btnClicked={false}
         />
       ))}
     </div>

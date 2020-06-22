@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -6,10 +6,12 @@ interface SearchCardProps {
   onAddToMyCardsClick: (cardName: string) => void;
   cardName: string;
   rewards: Array<String>;
+  btnClicked: boolean;
 }
 
 export const SearchCard: React.FC<SearchCardProps> = (props) => {
   const [btnClicked, setbtnClicked] = useState(false);
+  console.log(props.btnClicked);
   const handleAddToMyCardsBtnClick = () => {
     setbtnClicked(true);
     props.onAddToMyCardsClick(props.cardName);
@@ -19,6 +21,10 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
     marginTop: "1%",
     marginBottom: "1%",
   };
+
+  useEffect(() => {
+    setbtnClicked(props.btnClicked);
+  }, [props.cardName]);
 
   return (
     <div style={{ width: "100%" }}>
