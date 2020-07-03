@@ -7,6 +7,7 @@ import { searchAPI } from "../api/search"; //CCStack
 //import { searchAPI } from "../api/searchDB";
 
 export const MyRewards: React.FC<{}> = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userCards, setUserCards] = useState([""]);
   const [userCardsWithRewards, setUserCardsWithRewards] = useState<
     SearchResults[]
@@ -56,6 +57,9 @@ export const MyRewards: React.FC<{}> = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem("jwt") != null) {
+      setIsLoggedIn(true);
+    }
     getAndSetUserCardsFromBackend();
   }, []);
 
@@ -65,23 +69,32 @@ export const MyRewards: React.FC<{}> = () => {
 
   return (
     <Fragment>
-      <div
-        className="columns has-background-white is-centered"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="column is-one-third">
-          <UserCardsList
-            userCards={userCards}
-            onCardClick={showCardRewardsBtnHandler}
-          />
+      {isLoggedIn ? (
+        <div
+          className="columns has-background-white is-centered"
+          style={{ minHeight: "100vh" }}
+        >
+          <div className="column is-one-third">
+            <UserCardsList
+              userCards={userCards}
+              onCardClick={showCardRewardsBtnHandler}
+            />
+          </div>
+          <div className="column has-background-white is-two-thirds">
+            <RewardsList
+              rewards={rewardsToDisplay}
+              cardName={cardNameToDisplay}
+            />
+          </div>
         </div>
-        <div className="column has-background-white is-two-thirds">
-          <RewardsList
-            rewards={rewardsToDisplay}
-            cardName={cardNameToDisplay}
-          />
-        </div>
-      </div>
+      ) : (
+        <h4
+          className="subtitle"
+          style={{ textAlign: "center", marginTop: "1%" }}
+        >
+          Please login or sign up to track cards and rewards.
+        </h4>
+      )}
     </Fragment>
   );
 };

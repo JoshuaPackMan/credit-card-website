@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchResults } from "../model/searchResults";
@@ -8,6 +8,7 @@ import { searchAPI } from "../api/search"; //CCStack
 import { SearchCard } from "../components/SearchCard";
 
 export const Search: React.FC<{}> = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const searchText = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<SearchResults[]>([]);
   const topLevelDivStyle = {
@@ -32,6 +33,13 @@ export const Search: React.FC<{}> = () => {
       setResults(results);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("jwt") == null) {
+      setIsLoggedIn(false);
+      console.log("logged in: false");
+    }
+  }, []);
 
   return (
     <div style={topLevelDivStyle}>
@@ -58,6 +66,7 @@ export const Search: React.FC<{}> = () => {
           key={i}
           rewards={SearchResult.rewards}
           btnClicked={false}
+          isLoggedIn={isLoggedIn}
         />
       ))}
     </div>

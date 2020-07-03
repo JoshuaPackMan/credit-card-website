@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("un");
     props.setIsLoggedIn(false);
-    history.push("/search");
+    history.push("/about");
   };
   useEffect(() => {
     let loggedIn = false;
@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
     >
       <div className="navbar-brand">
         <Link to={"/"} className="navbar-item">
-          My Rewards
+          My Cards
         </Link>
         <Link to={"/search"} className="navbar-item">
           Search

@@ -7,6 +7,7 @@ interface SearchCardProps {
   cardName: string;
   rewards: Array<String>;
   btnClicked: boolean;
+  isLoggedIn: boolean;
 }
 
 export const SearchCard: React.FC<SearchCardProps> = (props) => {
@@ -25,6 +26,44 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
     setbtnClicked(props.btnClicked);
   }, [props.cardName, props.btnClicked]);
 
+  const renderAddToMyCardsBtn = () => {
+    if (btnClicked) {
+      return (
+        <span className="icon is-small is-right">
+          <i className="fas fa-home">
+            <FontAwesomeIcon icon={faCheck} />
+          </i>
+        </span>
+      );
+    } else {
+      if (props.isLoggedIn) {
+        return (
+          <button
+            onClick={handleAddToMyCardsBtnClick}
+            className="button is-primary"
+            style={addToMyCardsBtn}
+          >
+            Add this to My Cards
+          </button>
+        );
+      } else {
+        return (
+          <div>
+            <button
+              onClick={handleAddToMyCardsBtnClick}
+              className="button is-primary"
+              style={addToMyCardsBtn}
+              disabled
+            >
+              Add this to My Cards
+            </button>
+            <p>Please login to add this card to My Cards</p>
+          </div>
+        );
+      }
+    }
+  };
+
   return (
     <div style={{ width: "100%" }}>
       <div className="card" style={{ width: "100%" }}>
@@ -38,7 +77,8 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
             ))}
           </ul>
         </div>
-        {btnClicked ? (
+        {renderAddToMyCardsBtn()}
+        {/* {btnClicked ? (
           <span className="icon is-small is-right">
             <i className="fas fa-home">
               <FontAwesomeIcon icon={faCheck} />
@@ -52,7 +92,7 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
           >
             Add this to My Cards
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
