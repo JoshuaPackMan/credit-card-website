@@ -12,7 +12,8 @@ const mapAPIResultsToModel = (
   for (let i = 0; i < APIresults.length; i++) {
     let cardName: string = APIresults[i]["title"];
     let APIrewards = APIresults[i]["rewards"];
-    let rewardsList: Array<String> = [];
+    //let rewardsList: Array<String> = [];
+    let rewardsList: Array<string> = [];
     APIrewards.forEach((e) => {
       rewardsList.push(e["title"]);
     });

@@ -1,6 +1,7 @@
 export interface backendAPIsearchResults {
   result: {
     cardName: string;
-    rewards: Array<String>;
+    rewards: Array<string>;
+    //rewards: Array<String>;
   };
 }

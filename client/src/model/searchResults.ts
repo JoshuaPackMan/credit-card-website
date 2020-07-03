@@ -1,4 +1,5 @@
 export interface SearchResults {
   cardName: string;
-  rewards: Array<String>;
+  rewards: Array<string>;
+  //rewards: Array<String>;
 }

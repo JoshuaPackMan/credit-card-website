@@ -11,7 +11,6 @@ interface SearchCardProps {
 
 export const SearchCard: React.FC<SearchCardProps> = (props) => {
   const [btnClicked, setbtnClicked] = useState(false);
-  console.log(props.btnClicked);
   const handleAddToMyCardsBtnClick = () => {
     setbtnClicked(true);
     props.onAddToMyCardsClick(props.cardName);
@@ -24,7 +23,7 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
 
   useEffect(() => {
     setbtnClicked(props.btnClicked);
-  }, [props.cardName]);
+  }, [props.cardName, props.btnClicked]);
 
   return (
     <div style={{ width: "100%" }}>
