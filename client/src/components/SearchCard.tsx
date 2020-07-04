@@ -78,21 +78,6 @@ export const SearchCard: React.FC<SearchCardProps> = (props) => {
           </ul>
         </div>
         {renderAddToMyCardsBtn()}
-        {/* {btnClicked ? (
-          <span className="icon is-small is-right">
-            <i className="fas fa-home">
-              <FontAwesomeIcon icon={faCheck} />
-            </i>
-          </span>
-        ) : (
-          <button
-            onClick={handleAddToMyCardsBtnClick}
-            className="button is-primary"
-            style={addToMyCardsBtn}
-          >
-            Add this to My Cards
-          </button>
-        )} */}
       </div>
     </div>
   );

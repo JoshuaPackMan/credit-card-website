@@ -37,7 +37,6 @@ export const Search: React.FC<{}> = () => {
   useEffect(() => {
     if (localStorage.getItem("jwt") == null) {
       setIsLoggedIn(false);
-      console.log("logged in: false");
     }
   }, []);
 

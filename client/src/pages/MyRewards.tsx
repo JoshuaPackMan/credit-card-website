@@ -12,37 +12,8 @@ export const MyRewards: React.FC<{}> = () => {
   const [userCardsWithRewards, setUserCardsWithRewards] = useState<
     SearchResults[]
   >([]);
-  const [cardNameToDisplay, setCardNameToDisplay] = useState(
-    "Select a card on the left to view its rewards."
-  );
+  const [cardNameToDisplay, setCardNameToDisplay] = useState("");
   const [rewardsToDisplay, setRewardsToDisplay] = useState([""]);
-
-  const getAndSetUserCardsFromBackend = async () => {
-    const cards = await getMyCards();
-    setUserCards(cards);
-  };
-
-  const callAndSetRewardsForEachUserCard = useCallback(() => {
-    // if the userCards have not yet been fetched from the backend:
-    if (userCards.length === 1 && userCards[0] === "") {
-      return;
-    }
-
-    let cardsWithRewards: SearchResults[] = [];
-
-    userCards.forEach(async (cardName) => {
-      let apiResults = await searchAPI(cardName);
-      if (apiResults.length !== 0) {
-        for (let i = 0; i < apiResults.length; i++) {
-          if (cardName === apiResults[i].cardName) {
-            cardsWithRewards.push(apiResults[i]);
-            break;
-          }
-        }
-      }
-    });
-    setUserCardsWithRewards(cardsWithRewards);
-  }, [userCards]);
 
   const showCardRewardsBtnHandler = (cardName: string) => {
     setCardNameToDisplay(cardName);
@@ -56,45 +27,101 @@ export const MyRewards: React.FC<{}> = () => {
     }
   };
 
+  const getUserCardsAndRewards = useCallback(async () => {
+    if (!isLoggedIn) {
+      return;
+    }
+    const cards = await getMyCards();
+    setUserCards(cards);
+
+    let cardsWithRewards: SearchResults[] = [];
+
+    for (let i = 0; i < cards.length; i++) {
+      let cardName = cards[i];
+      let apiResults = await searchAPI(cardName);
+      if (apiResults.length !== 0) {
+        for (let i = 0; i < apiResults.length; i++) {
+          if (cardName === apiResults[i].cardName) {
+            cardsWithRewards.push(apiResults[i]);
+            break;
+          }
+        }
+      }
+    }
+
+    setUserCardsWithRewards(cardsWithRewards);
+
+    if (cardsWithRewards.length > 0) {
+      setCardNameToDisplay(cardsWithRewards[0].cardName);
+      setRewardsToDisplay(cardsWithRewards[0].rewards);
+    }
+  }, [isLoggedIn]);
+
   useEffect(() => {
     if (localStorage.getItem("jwt") != null) {
       setIsLoggedIn(true);
     }
-    getAndSetUserCardsFromBackend();
-  }, []);
+    getUserCardsAndRewards();
+  }, [getUserCardsAndRewards]);
 
-  useEffect(() => {
-    callAndSetRewardsForEachUserCard();
-  }, [callAndSetRewardsForEachUserCard]);
-
-  return (
-    <Fragment>
-      {isLoggedIn ? (
-        <div
-          className="columns has-background-white is-centered"
-          style={{ minHeight: "100vh" }}
-        >
-          <div className="column is-one-third">
-            <UserCardsList
-              userCards={userCards}
-              onCardClick={showCardRewardsBtnHandler}
-            />
+  const renderMyRewards = () => {
+    if (isLoggedIn) {
+      if (userCards.length === 0) {
+        return (
+          <div className="content rewards-list" style={{ width: "90%" }}>
+            <h3
+              className="subtitle"
+              style={{ textAlign: "center", marginTop: "1%" }}
+            >
+              Cards you track will appear here. To track a card:
+            </h3>
+            <div style={{ margin: "0 auto", width: "30%" }}>
+              <ul>
+                <li>Click "Search" in the above navigation bar.</li>
+                <li>Search for a card</li>
+                <li>Click the "Add To My Cards" button</li>
+              </ul>
+            </div>
           </div>
-          <div className="column has-background-white is-two-thirds">
-            <RewardsList
-              rewards={rewardsToDisplay}
-              cardName={cardNameToDisplay}
-            />
+        );
+      } else {
+        return (
+          <div
+            className="columns has-background-white is-centered"
+            style={{ minHeight: "100vh" }}
+          >
+            <div className="column is-one-third">
+              <UserCardsList
+                userCards={userCards}
+                onCardClick={showCardRewardsBtnHandler}
+              />
+            </div>
+            <div className="column has-background-white is-two-thirds">
+              <RewardsList
+                rewards={rewardsToDisplay}
+                cardName={cardNameToDisplay}
+              />
+            </div>
           </div>
+        );
+      }
+    } else {
+      return (
+        <div style={{ textAlign: "center", marginTop: "1%" }}>
+          <h3 className="title is-3">Young Money Finance Card Rewards</h3>
+          <h4 className="subtitle" style={{ marginTop: "1%" }}>
+            Please login or sign up to track cards.
+          </h4>
+          <h4 className="subtitle" style={{ marginTop: "1%" }}>
+            Hit Search in the navigation bar above to explore rewards.
+          </h4>
+          <h4 className="subtitle" style={{ marginTop: "1%" }}>
+            Cards you track will appear here.
+          </h4>
         </div>
-      ) : (
-        <h4
-          className="subtitle"
-          style={{ textAlign: "center", marginTop: "1%" }}
-        >
-          Please login or sign up to track cards and rewards.
-        </h4>
-      )}
-    </Fragment>
-  );
+      );
+    }
+  };
+
+  return <Fragment>{renderMyRewards()}</Fragment>;
 };
