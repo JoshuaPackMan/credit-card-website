@@ -20,7 +20,7 @@ export const LoginSignup: React.FC<LoginSignupProps> = (props) => {
     setPassword(e.target.value);
   };
   const login = async (name: String, pass: String) => {
-    await Axios.post("http://localhost:3000/account/login", {
+    await Axios.post(`${process.env.REACT_APP_SERVER_URL}/account/login`, {
       name: name,
       pass: pass,
     })
@@ -42,7 +42,7 @@ export const LoginSignup: React.FC<LoginSignupProps> = (props) => {
     try {
       await Axios({
         method: "POST",
-        url: "http://localhost:3000/account/create",
+        url: `${process.env.REACT_APP_SERVER_URL}/account/create`,
         data: {
           name: username,
           pass: password,
@@ -58,12 +58,10 @@ export const LoginSignup: React.FC<LoginSignupProps> = (props) => {
     await login(username, password);
 
     // create user cards array in DB
-    //let userName = localStorage.getItem("un");
     let jwt = localStorage.getItem("jwt");
     await Axios({
       method: "POST",
-      //url: `http://localhost:3000/user/${userName}/cards`,
-      url: `http://localhost:3000/user/cards`,
+      url: `${process.env.REACT_APP_SERVER_URL}/user/cards`,
       data: {
         data: {
           userCards: [],

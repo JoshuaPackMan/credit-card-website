@@ -2,7 +2,7 @@ import Axios from "axios";
 import { backendAPIsearchResults } from "../model/backendAPIsearchResults";
 import { SearchResults } from "../model/searchResults";
 
-const backendURL = `http://localhost:3000/public/cards/`;
+const backendURL = `${process.env.REACT_APP_SERVER_URL}/public/cards/`;
 
 const mapAPIResultsToModel = (
   APIresult: backendAPIsearchResults

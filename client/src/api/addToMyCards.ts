@@ -6,7 +6,7 @@ export const addToMyCards = async (cardName: string) => {
 
   await Axios({
     method: "POST",
-    url: `http://localhost:3000/user/cards/userCards`,
+    url: `${process.env.REACT_APP_SERVER_URL}/user/cards/userCards`,
     data: {
       data: [cardName],
       type: "merge",
