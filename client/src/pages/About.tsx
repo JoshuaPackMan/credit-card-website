@@ -15,6 +15,10 @@ export const About: React.FC<{}> = (props) => {
         Young Money Finance blog
       </a>
       <p style={{ textAlign: "center", paddingTop: "1%" }}>
+        Disclaimer: We do not gurantee that the information provided on this
+        website is accurate or up to date.
+      </p>
+      <p style={{ textAlign: "center", paddingTop: "1%" }}>
         2020 © Joshua Pack. All Rights Reserved
       </p>
     </div>
