@@ -34,6 +34,16 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
+        <div className="navbar-item">
+          {props.isLoggedIn ? (
+            <LoginLogoutBtn handleClick={handleSignout} text="Signout" />
+          ) : (
+            <LoginLogoutBtn
+              handleClick={handleLoginSignup}
+              text="Login/Sign up"
+            />
+          )}
+        </div>
         <Link to={"/"} className="navbar-item">
           My Cards
         </Link>
@@ -45,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
         </Link>
       </div>
 
-      <div className="navbar-end">
+      {/* <div className="navbar-end">
         <div className="navbar-item">
           {props.isLoggedIn ? (
             <LoginLogoutBtn handleClick={handleSignout} text="Signout" />
@@ -56,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = (props) => {
             />
           )}
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 };
