@@ -6,7 +6,7 @@ A website to get information about and keep track of your credit card rewards.
 
 The website is live at https://ymfcardrewards.com/
 
-- The frontend is React, the backend is Express
+- The frontend is React, I'm utilizing an Express server open source template for the backend.
 
 This was deployed using an Ubuntu DigitalOcean Droplet. This involved:
 
