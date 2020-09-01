@@ -7,6 +7,7 @@ A website to get information about and keep track of your credit card rewards.
 The website is live at https://ymfcardrewards.com/
 
 - The frontend is React, I'm utilizing an Express server open source template for the backend.
+- The website gets data from the [ccstack.io](https://ccstack.io/) API
 
 This was deployed using an Ubuntu DigitalOcean Droplet. This involved:
 
